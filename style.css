@@ -30,19 +30,33 @@ body {
 /* Name block */
 #nameBlock {
   opacity: 0;
-  transition: opacity 1.8s ease;
+  transition: opacity 1.6s ease;
 }
 
 .you-are {
   font-size: clamp(1.4rem, 3vw, 2.2rem);
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.25rem;
+}
+
+/* Softer appearance for "And you are" */
+.soft-text {
+  opacity: 0;
+  transform: translateY(4px);
+  animation: softFadeIn 1.8s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
+@keyframes softFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .name-line {
   font-size: clamp(2.5rem, 6vw, 4rem);
   display: flex;
-  align-items: center;
-  gap: 0.6rem;
+  justify-content: center;
+  gap: 0; /* IMPORTANT: remove flex gap */
 }
 
 /* Letters */
@@ -50,7 +64,7 @@ body {
   display: inline-block;
 }
 
-/* Perfect rolling animation (unchanged) */
+/* Roll animations */
 .roll-out {
   animation: rollOut 0.85s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
 }
@@ -77,22 +91,47 @@ body {
   }
 }
 
-/* Handwriting effect */
+/* Handwriting — slower & smoother */
 .handwrite {
   display: inline-block;
   opacity: 0;
-  transform: translateY(6px);
-  animation: writeIn 0.4s ease forwards;
+  transform: translateY(2px);
+  animation: writeInk 1.05s cubic-bezier(0.22, 0.08, 0.15, 1) forwards;
 }
 
-@keyframes writeIn {
+@keyframes writeInk {
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-/* Rose petals */
+/* NEXT BUTTON */
+#nextBtn {
+  margin-top: 2.2rem;
+  padding: 0.55rem 1.8rem;
+  font-family: 'Pacifico', cursive;
+  font-size: 1.1rem;
+  background: pink;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+
+#nextBtn.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#nextBtn.fade-fast {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Petals */
 .petal {
   position: absolute;
   top: -10%;
