@@ -3,10 +3,11 @@ const nameBlock = document.getElementById("nameBlock");
 const nameSpan = document.getElementById("name");
 const finalText = document.getElementById("finalText");
 const petalsContainer = document.getElementById("petals");
+const nextBtn = document.getElementById("nextBtn");
 
 const sleep = ms => new Promise(res => setTimeout(res, ms));
 
-/* ---------------- PETALS (CONTINUOUS) ---------------- */
+/* ---------------- PETALS ---------------- */
 function startPetals() {
   for (let i = 0; i < 35; i++) {
     const p = document.createElement("div");
@@ -19,18 +20,46 @@ function startPetals() {
 }
 startPetals();
 
-/* ---------------- GREETINGS ---------------- */
-async function showGreeting(text) {
-  greeting.textContent = text;
-  greeting.style.opacity = "1";
-  await sleep(1800);
-  greeting.style.opacity = "0";
-  await sleep(1000);
+/* ---------------- BUTTON CONTROL ---------------- */
+function showButton() {
+  nextBtn.classList.add("show");
 }
 
+function hideButtonFast() {
+  nextBtn.classList.remove("show");
+  nextBtn.classList.add("fade-fast");
+  setTimeout(() => nextBtn.classList.remove("fade-fast"), 400);
+}
+
+function waitForNext() {
+  return new Promise(resolve => {
+    showButton();
+    nextBtn.onclick = () => {
+      hideButtonFast();
+      resolve();
+    };
+  });
+}
+
+/* ---------------- GREETINGS ---------------- */
 async function greetingsSequence() {
-  await showGreeting("Welcome to our website");
-  await showGreeting("I know who you are");
+  greeting.textContent = "Welcome to our website";
+  greeting.style.opacity = "1";
+  await sleep(1200);
+
+  await waitForNext();
+
+  greeting.style.opacity = "0";
+  await sleep(1000);
+
+  greeting.textContent = "I know who you are";
+  greeting.style.opacity = "1";
+  await sleep(1200);
+
+  await waitForNext();
+
+  greeting.style.opacity = "0";
+  await sleep(1000);
 }
 
 /* ---------------- NAME TRANSFORMATION ---------------- */
@@ -49,45 +78,65 @@ async function transformName() {
 
   await sleep(2200);
 
-  /* Slow, perfect, sequential rolling */
   const indices = [3, 4, 5, 6];
 
-  for (let i = 0; i < indices.length; i++) {
-    const idx = indices[i];
+  for (const idx of indices) {
     const oldLetter = nameSpan.children[idx];
-
     oldLetter.classList.add("roll-out");
     await sleep(950);
 
     const newLetter = document.createElement("span");
     newLetter.className = "letter roll-in";
     newLetter.textContent = target[idx];
-
     nameSpan.replaceChild(newLetter, oldLetter);
     await sleep(1000);
   }
 
-  /* FINAL: handwritten "and Shahroz" (FIXED) */
-  await sleep(800);
+  await sleep(700);
+  await waitForNext();
 
-  const text = "Shahroz";
+  /* Fade out */
+  nameBlock.style.opacity = "0";
+  await sleep(900);
+
+  /* Soft heading change */
+  const youAre = document.querySelector(".you-are");
+  youAre.textContent = "And you are";
+  youAre.classList.remove("soft-text");
+  void youAre.offsetWidth;
+  youAre.classList.add("soft-text");
+
+  nameSpan.innerHTML = "";
   finalText.innerHTML = "";
 
-  for (const char of text) {
+  /* Fade back in */
+  nameBlock.style.opacity = "1";
+
+  /* LONGER emotional pause (clear difference) */
+  await sleep(1800);
+
+  /* Handwritten full name */
+  const fullName = "Shaista Shahroz";
+
+  for (const char of fullName) {
     const span = document.createElement("span");
+
     if (char === " ") {
-        span.innerHTML = "&nbsp;";
-        span.style.width = "0.5em";
+      span.innerHTML = "&nbsp;";
+      span.style.width = "0.25em"; // guaranteed reduced space
     } else {
-        span.textContent = char;
+      span.textContent = char;
     }
+
     span.className = "handwrite";
     finalText.appendChild(span);
-    await sleep(180);
+
+    // slower, smoother, calm pacing
+    await sleep(char === " " ? 320 : 220 + Math.random() * 70);
   }
 }
 
-/* ---------------- MASTER SEQUENCE ---------------- */
+/* ---------------- MASTER ---------------- */
 async function startSequence() {
   await greetingsSequence();
   nameBlock.style.opacity = "1";
