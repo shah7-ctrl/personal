@@ -1,7 +1,6 @@
 const greeting = document.getElementById("greeting");
 const nameBlock = document.getElementById("nameBlock");
 const nameSpan = document.getElementById("name");
-const finalText = document.getElementById("finalText");
 const petalsContainer = document.getElementById("petals");
 const nextBtn = document.getElementById("nextBtn");
 
@@ -62,7 +61,7 @@ async function greetingsSequence() {
   await sleep(1000);
 }
 
-/* ---------------- NAME TRANSFORMATION ---------------- */
+/* ---------------- NAME TRANSFORMATION (FINAL END) ---------------- */
 async function transformName() {
   const original = "Shahroz";
   const target = "Shaista";
@@ -92,48 +91,7 @@ async function transformName() {
     await sleep(1000);
   }
 
-  await sleep(700);
-  await waitForNext();
-
-  /* Fade out */
-  nameBlock.style.opacity = "0";
-  await sleep(900);
-
-  /* Soft heading change */
-  const youAre = document.querySelector(".you-are");
-  youAre.textContent = "And you are";
-  youAre.classList.remove("soft-text");
-  void youAre.offsetWidth;
-  youAre.classList.add("soft-text");
-
-  nameSpan.innerHTML = "";
-  finalText.innerHTML = "";
-
-  /* Fade back in */
-  nameBlock.style.opacity = "1";
-
-  /* LONGER emotional pause (clear difference) */
-  await sleep(1800);
-
-  /* Handwritten full name */
-  const fullName = "Shaista Shahroz";
-
-  for (const char of fullName) {
-    const span = document.createElement("span");
-
-    if (char === " ") {
-      span.innerHTML = "&nbsp;";
-      span.style.width = "0.25em"; // guaranteed reduced space
-    } else {
-      span.textContent = char;
-    }
-
-    span.className = "handwrite";
-    finalText.appendChild(span);
-
-    // slower, smoother, calm pacing
-    await sleep(char === " " ? 320 : 220 + Math.random() * 70);
-  }
+  /* END HERE — no further animation, no button */
 }
 
 /* ---------------- MASTER ---------------- */
