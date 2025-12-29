@@ -56,7 +56,7 @@ body {
   font-size: clamp(2.5rem, 6vw, 4rem);
   display: flex;
   justify-content: center;
-  gap: 0; /* IMPORTANT: remove flex gap */
+  gap: 0;
 }
 
 /* Letters */
@@ -88,21 +88,6 @@ body {
   to {
     transform: translateY(0);
     opacity: 1;
-  }
-}
-
-/* Handwriting — slower & smoother */
-.handwrite {
-  display: inline-block;
-  opacity: 0;
-  transform: translateY(2px);
-  animation: writeInk 1.05s cubic-bezier(0.22, 0.08, 0.15, 1) forwards;
-}
-
-@keyframes writeInk {
-  to {
-    opacity: 1;
-    transform: translateY(0);
   }
 }
 
