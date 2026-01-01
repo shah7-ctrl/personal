@@ -38,20 +38,6 @@ body {
   margin-bottom: 0.25rem;
 }
 
-/* Softer appearance for "And you are" */
-.soft-text {
-  opacity: 0;
-  transform: translateY(4px);
-  animation: softFadeIn 1.8s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
-}
-
-@keyframes softFadeIn {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 .name-line {
   font-size: clamp(2.5rem, 6vw, 4rem);
   display: flex;
@@ -88,6 +74,26 @@ body {
   to {
     transform: translateY(0);
     opacity: 1;
+  }
+}
+
+/* Faster, smoother final emphasis */
+.name-glow {
+  animation: nameGlow 1s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+@keyframes nameGlow {
+  0% {
+    transform: scale(1);
+    text-shadow: none;
+  }
+  45% {
+    transform: scale(1.05);
+    text-shadow: 0 0 12px rgba(255, 105, 180, 0.55);
+  }
+  100% {
+    transform: scale(1);
+    text-shadow: none;
   }
 }
 
