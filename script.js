@@ -12,8 +12,8 @@ function startPetals() {
     const p = document.createElement("div");
     p.className = "petal";
     p.style.left = Math.random() * 100 + "vw";
-    p.style.animationDuration = 7 + Math.random() * 5 + "s";
-    p.style.animationDelay = Math.random() * 5 + "s";
+    p.style.animationDuration = 9 + Math.random() * 6 + "s";
+    p.style.animationDelay = Math.random() * 6 + "s";
     petalsContainer.appendChild(p);
   }
 }
@@ -61,7 +61,7 @@ async function greetingsSequence() {
   await sleep(1000);
 }
 
-/* ---------------- NAME TRANSFORMATION (FINAL END) ---------------- */
+/* ---------------- NAME TRANSFORMATION ---------------- */
 async function transformName() {
   const original = "Shahroz";
   const target = "Shaista";
@@ -91,7 +91,13 @@ async function transformName() {
     await sleep(1000);
   }
 
-  /* END HERE — no further animation, no button */
+  /* Faster, smoother emphasis */
+  await sleep(250);
+  nameSpan.classList.add("name-glow");
+
+  setTimeout(() => {
+    nameSpan.classList.remove("name-glow");
+  }, 1000);
 }
 
 /* ---------------- MASTER ---------------- */
